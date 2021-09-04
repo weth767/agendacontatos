@@ -6,6 +6,6 @@ Simple project to test skills on Flutter and SQLite
 - Flutter 2+
 
 ## How do i run it?
-"""
+```
 flutter run
-"""
+```
