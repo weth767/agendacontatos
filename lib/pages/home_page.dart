@@ -173,6 +173,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Widget textButton(String label, VoidCallback? function) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: TextButton(
+        onPressed: function,
+        child: Text(
+          label,
+          style: TextStyle(color: Colors.red, fontSize: 20),
+        )
+      ),
+    );
+  }
+
   void _showOptions(BuildContext context, int index) {
     showModalBottomSheet(
       context: context,
@@ -185,48 +198,21 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextButton(
-                      onPressed: () {
-                        launch("tel:${contacts[index].phone}}");
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Ligar",
-                        style: TextStyle(color: Colors.red, fontSize: 20),
-                      )
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _showContactPage(contacts[index]);
-                      },
-                      child: Text(
-                        "Editar",
-                        style: TextStyle(color: Colors.red, fontSize: 20),
-                      )
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextButton(
-                      onPressed: () {
-                        contactRepository.delete(contacts[index].id!);
-                        setState(() {
-                          contacts.removeAt(index);
-                          Navigator.pop(context);
-                        });
-                      },
-                      child: Text(
-                        "Deletar",
-                        style: TextStyle(color: Colors.red, fontSize: 20),
-                      )
-                    ),
-                  ),
+                  textButton("Ligar",  () {
+                    launch("tel:${contacts[index].phone}}");
+                    Navigator.pop(context);
+                  }),
+                  textButton("Editar", () {
+                    Navigator.pop(context);
+                    _showContactPage(contacts[index]);
+                  }),
+                  textButton("Deletar", () {
+                    contactRepository.delete(contacts[index].id!);
+                    setState(() {
+                      contacts.removeAt(index);
+                      Navigator.pop(context);
+                    });
+                  })
                 ],
               ),
             );
